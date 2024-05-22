@@ -1,0 +1,4 @@
+#!/bin/sh
+
+npx tailwindcss -i ./budget_buddy/static/css/input.css -o ./budget_buddy/static/css/styles.css --watch
+
