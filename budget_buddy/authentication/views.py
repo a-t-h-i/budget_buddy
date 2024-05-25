@@ -2,27 +2,24 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 
 
-def set_current_page(page: str, request: object) -> object:
-    current_page = request.session["current_page"] = page
-    return current_page
+def check_username(request):
+    username = request.GET.get("username")
+    restricted_usernames = ["admin", "athi", "king", "test"]
 
-
-def get_current_page(request: object) -> object:
-    current_page = request.session["current_page"]
-    return current_page if current_page else ""
+    if username.lower() in restricted_usernames:
+        return render(request, "autentication/username_taken.html")
+    else:
+        return render(request, "autentication/username_available.html")
 
 
 def login_page(request):
-    set_current_page("", request)
-    return render(request, "autentication/index.html")
+    return render(request, "autentication/login.html")
 
 
 def registratiom_page(request):
     return render(request, "autentication/register.html")
 
 
+# @login_required(login_url="login")
 def main_page(request):
-    if get_current_page(request) == "home" or get_current_page(request) == "":
-        return render(request, "budget_buddy/home_page.html")
-    else:
-        redirect("")
+    return render(request, "budget_buddy/home_page.html")
