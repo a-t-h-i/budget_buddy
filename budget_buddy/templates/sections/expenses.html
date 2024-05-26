@@ -1,5 +1,16 @@
 <title>{% block title %}- Expenses 💸{% endblock %}</title>
 
 <div class="card-body">
-    <h2 class="card-title mx-auto">Expenses</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="id_name">Name:</label>
+            <input type="text" id="id_name" name="name" maxlength="255" required>
+        </div>
+        <div>
+            <label for="id_rating">Rating:</label>
+            <input type="number" id="id_rating" name="rating">
+        </div>
+        <button type="submit">Save</button>
+    </form>
 </div>

@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import User
 
 
 class Budget(models.Model):
@@ -9,6 +10,9 @@ class Budget(models.Model):
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="budget_owner"
+    )
 
     def __str__(self):
         return self.name
@@ -17,6 +21,9 @@ class Budget(models.Model):
 class Expense_Category(models.Model):
     name = models.CharField(max_length=255)
     rating = models.IntegerField(null=True, blank=True)
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="category_owner"
+    )
 
     def __str__(self):
         return self.name
@@ -31,6 +38,9 @@ class Expense(models.Model):
     )
     budget = models.ForeignKey(
         Budget, on_delete=models.CASCADE, related_name="linked_budget"
+    )
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="expense_owner"
     )
 
     def __str__(self):

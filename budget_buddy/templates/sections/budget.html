@@ -1,5 +1,28 @@
 <title>{% block title %}- Budget 💰{% endblock %}</title>
 
-<div class="card-body">
-    <h2 class="card-title mx-auto">Budget</h2>
+<div class="card-body mx-auto">
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="id_name">Name:</label>
+            <input type="text" id="id_name" name="name" maxlength="255" required>
+        </div>
+        <div>
+            <label for="id_income">Income:</label>
+            <input type="number" step="0.01" id="id_income" name="income" required>
+        </div>
+        <div>
+            <label for="id_other_income">Other Income:</label>
+            <input type="number" step="0.01" id="id_other_income" name="other_income">
+        </div>
+        <div>
+            <label for="id_start_date">Start Date:</label>
+            <input type="date" id="id_start_date" name="start_date">
+        </div>
+        <div>
+            <label for="id_end_date">End Date:</label>
+            <input type="date" id="id_end_date" name="end_date">
+        </div>
+        <button type="submit">Save</button>
+    </form>
 </div>
