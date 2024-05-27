@@ -229,7 +229,7 @@
     <!-- Logout button -->
     <div class="navbar-end">
 
-        <a class="btn btn-sm" href="/">Logout
+        <a class="btn btn-sm" href="{% url 'logout' %}">Logout
 
             <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -248,10 +248,9 @@
 <div class="bg-base-100 shadow-sm flex justify-center h-screen p-1 rounded-xl">
     <div class="card card-compact w-full bg-base-200 shadow-xl mt-2 border border-gray-400" id="mainDiv">
         <div class="card-body">
-            <h2 class="card-title mx-auto">Welcome back Athi!</h2>
+            <h2 class="card-title mx-auto"> Welcome back {{ user.username }}</h2>
         </div>
     </div>
 </div>
 
 {% endblock %}
-

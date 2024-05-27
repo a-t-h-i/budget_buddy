@@ -10,7 +10,7 @@
     <div class="p-4">
         <h2 class="card-title content-center">Budget Buddy</h2>
 
-        <form id="loginForm" hx-post="/home_page/" hx-target="#mainPage" hx-swap="innerHTML">
+        <form id="loginForm" method="POST" action="{% url 'user_login'%}">
             {% csrf_token %}
             <div>
                 <!-- Username -->
@@ -23,8 +23,16 @@
                     <input type="password" class="grow" placeholder="Password" name="password" />
                 </label>
 
-                <div class="mt-4 grid grid-cols-2 gap-4 self-center">
-                    <button class="btn btn-neutral btn-md" type="submit" href="/home_page">Login</button>
+                {% if form.non_field_errors %}
+                <div class="badge badge-sm badge-error gap-2 mt-2 mx-auto">
+                    {% for error in form.non_field_errors %}
+                    {{error}}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="mt-2 grid grid-cols-2 gap-4 self-center">
+                    <button class="btn btn-neutral btn-md" type="submit">Login</button>
                     <a class="btn btn-md float-right" href="{% url 'register' %}">
                         Register
                     </a>

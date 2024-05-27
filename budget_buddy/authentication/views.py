@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from user.models import User
 
 
 def check_username(request):
@@ -20,6 +22,14 @@ def registratiom_page(request):
     return render(request, "autentication/register.html")
 
 
-# @login_required(login_url="login")
+def leave_app(request):
+    logout(request)
+    return redirect("login")
+
+
+@login_required(login_url="login")
 def main_page(request):
-    return render(request, "budget_buddy/home_page.html")
+    user = User.objects.get(pk=request.user.id)
+
+    print(f"User: {user}")
+    return render(request, "budget_buddy/home_page.html", {"user": user})
