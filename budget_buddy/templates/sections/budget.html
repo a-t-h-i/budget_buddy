@@ -1,29 +1,92 @@
 <title>{% block title %}- Budget 💰{% endblock %}</title>
 
+<div class="mx-auto" id="serverNotifications">
 
-
-<div class="justify-normal">
-    <button class="btn btn-neutral justify-center p-2 m-2" onclick="my_modal_3.showModal()">New Budget</button>
 </div>
 
-<dialog id="my_modal_3" class="modal">
+<div class="justify-normal">
+    <button class="btn btn-neutral justify-center p-2 m-2" onclick="new_budget.showModal()">New Budget</button>
+</div>
+
+<dialog id="new_budget" class="modal">
+
     <div class="modal-box">
-        <form method="dialog">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+
+        <form class="grid" action="{% url 'new_budget' %}" method="POST">
+
+            {% csrf_token %}
+
+            <div class="card">
+                <h2 class="mb-4 mx-auto">New Budget</h2>
+            </div>
+
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"><strong>✕</strong></button>
+
+
+            <!-- Budget name -->
+            <label class="input input-bordered flex items-center gap-2 mt-2 mb-2">
+                Budget Name:
+                <input type="text" class="grow" name="name" placeholder="My new budget" />
+            </label>
+
+            <!-- Income amount -->
+            <label class="input input-bordered flex items-center gap-2 mt-2 mb-2">
+                Income:
+                <input type="number" class="grow" name="income" placeholder="0.00" />
+            </label>
+
+
+            <!-- Other income -->
+            <label class="input input-bordered flex items-center gap-2 mt-2 mb-2">
+                Other income:
+                <input type="number" class="grow" name="other_income" placeholder="0.00" />
+            </label>
+
+
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Start Date -->
+                <label class="input input-bordered flex items-center gap-2 mt-2 mb-2 col-auto">
+                    From:
+                    <input type="date" class="grow" name="start_date" placeholder="Daisy" />
+                </label>
+
+
+                <!-- End Date -->
+                <label class="input input-bordered flex items-center gap-2 mt-2 mb-2 col-auto">
+                    Until:
+                    <input type="date" class="grow" name="end_date" placeholder="Daisy" />
+                </label>
+            </div>
+
+            <button class="btn btn-neutral justify-center p-2 m-2" type="submit">Create</button>
+
         </form>
-        <h3 class="font-bold text-lg">Hello!</h3>
-        <p class="py-4">Press ESC key or click on ✕ button to close</p>
     </div>
 </dialog>
 
 
-<div class="card w-96 glass">
-    <figure><img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="car!" /></figure>
-    <div class="card-body">
-        <h2 class="card-title">Monthly Budget</h2>
-        <p>From 01 March 2024 until 30 March 2024</p>
-        <div class="card-actions justify-center">
-            <button class="btn btn-primary">Update</button>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-3 p-6">
+
+    {% if budget_items %}
+
+    {% for budget in budget_items %}
+    <div class="card w-96 grid-flow-col">
+        <div class="stats shadow text-primary-content border border-gray-400">
+            <div class="stat">
+                <div class="stat-title mx-auto"><strong>{{budget.name}}</strong></div>
+                <div class="stat-value mx-auto">{{budget.income}}</div>
+                <div class="stat-actions align-middle">
+                    <button class="btn btn-sm btn-warning  float-start">Update</button>
+                    <button class="btn btn-sm btn-error float-end"
+                        hx-delete="/delete/budget_item?budget_id={{budget.id}}"
+                        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#serverNotifications"
+                        hx-swap="innerHTML settle:2s">Delete</button>
+                </div>
+            </div>
         </div>
     </div>
+    {% endfor %}
+
+    {% endif %}
+
 </div>

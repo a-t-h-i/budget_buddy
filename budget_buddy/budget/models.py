@@ -8,6 +8,7 @@ class Budget(models.Model):
     other_income = models.DecimalField(
         max_digits=10, decimal_places=2, blank=True, null=True
     )
+    is_deleted = models.BooleanField(null=True, blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     created_by = models.ForeignKey(
