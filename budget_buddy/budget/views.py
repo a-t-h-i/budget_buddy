@@ -30,7 +30,8 @@ def insights_view(request):
 
 
 def expenses_view(request):
-    return render(request, "sections/expenses.html")
+    budget_items = _get_budget_items(request.user.id)
+    return render(request, "sections/expenses.html", {"budget_items": budget_items})
 
 
 def new_budget(request):
@@ -39,9 +40,9 @@ def new_budget(request):
         form = BudgetForm(request.POST)
 
         if form.is_valid():
-            return JsonResponse(_create_new_budget(form, request.user.id), safe=False)
+            return _create_new_budget(form, request.user.id)
         else:
-            return JsonResponse({"error": f"{form.errors}"})
+            return HttpResponse(_error_message(form.errors))
 
 
 @require_http_methods(["DELETE"])
@@ -51,20 +52,24 @@ def delete_budget(request):
     if budget_id != None:
         return _delete_budget_item(budget_id)
     else:
-        return JsonResponse({"error": "No budget_id provided."}, status=400)
+        return HttpResponse(_warning_message("Budget item not found!"))
 
 
-def _create_new_budget(form: object, user_id: int) -> dict:
+def _create_new_budget(form: object, user_id: int) -> HttpResponse:
 
     try:
         post = form.save(commit=False)
         post.created_by = User.objects.get(pk=user_id)
         post.save()
 
-        return {"success": "Budget created!"}
+        return HttpResponse(
+            _success_message(f"New budget created!"),
+        )
 
     except Exception as error:
-        return {"error": str(error)}
+        return HttpResponse(
+            _error_message(error),
+        )
 
 
 def _get_budget_items(user_id: int) -> list:
@@ -88,7 +93,6 @@ def _delete_budget_item(item_id: int):
         return JsonResponse({"error": str(error)})
 
 
-# This just renders a dasy ui alert with the passed message to a specific part of the DOM
 def _success_message(message: str):
     return render_to_string(
         "sections/alerts/success.html", {"success_message": message}
@@ -96,8 +100,10 @@ def _success_message(message: str):
 
 
 def _error_message(message: str):
-    return render("sections/alerts/success.html", {"success_message": message})
+    return render_to_string("sections/alerts/error.html", {"error_message": message})
 
 
 def _warning_message(message: str):
-    return render("sections/alerts/success.html", {"success_message": message})
+    return render_to_string(
+        "sections/alerts/warning.html", {"warning_message": message}
+    )

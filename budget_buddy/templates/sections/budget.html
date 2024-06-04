@@ -12,7 +12,7 @@
 
     <div class="modal-box">
 
-        <form class="grid" action="{% url 'new_budget' %}" method="POST">
+        <form class="grid" hx-post="{% url 'new_budget' %}" hx-target="#serverNotifications">
 
             {% csrf_token %}
 

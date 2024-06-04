@@ -1,16 +1,91 @@
 <title>{% block title %}- Expenses 💸{% endblock %}</title>
 
-<div class="card-body">
-    <form method="post">
-        {% csrf_token %}
-        <div>
-            <label for="id_name">Name:</label>
-            <input type="text" id="id_name" name="name" maxlength="255" required>
+
+<div class="justify-normal">
+    <button class="btn btn-neutral justify-center p-2 m-2" onclick="new_budget.showModal()">Add Expense</button>
+</div>
+
+<dialog id="new_budget" class="modal">
+
+    <div class="modal-box">
+
+        <form class="grid" hx-post="{% url 'new_budget' %}" hx-target="#serverNotifications">
+
+            {% csrf_token %}
+
+            <div class="card">
+                <h2 class="mb-4 mx-auto">Add Expense</h2>
+            </div>
+
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onclick="new_budget.hideModal()"><strong>✕</strong></button>
+
+            <!-- Budget name -->
+            <select name="budget" class="select select-bordered w-full max-w-xs">
+                <option disabled selected>Expense for which budget?</option>
+                {% for budget in budget_items %}
+                <option value="{{budget.id}}">{{budget.name}}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Income amount -->
+            <label class="input input-bordered flex items-center gap-2 mt-2 mb-2">
+                Income:
+                <input type="number" class="grow" name="income" placeholder="0.00" />
+            </label>
+
+
+            <!-- Other income -->
+            <label class="input input-bordered flex items-center gap-2 mt-2 mb-2">
+                Other income:
+                <input type="number" class="grow" name="other_income" placeholder="0.00" />
+            </label>
+
+
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Start Date -->
+                <label class="input input-bordered flex items-center gap-2 mt-2 mb-2 col-auto">
+                    From:
+                    <input type="date" class="grow" name="start_date" placeholder="Daisy" />
+                </label>
+
+
+                <!-- End Date -->
+                <label class="input input-bordered flex items-center gap-2 mt-2 mb-2 col-auto">
+                    Until:
+                    <input type="date" class="grow" name="end_date" placeholder="Daisy" />
+                </label>
+            </div>
+
+            <button class="btn btn-neutral justify-center p-2 m-2" type="submit">Create</button>
+
+        </form>
+    </div>
+</dialog>
+
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-3 p-6">
+
+    {% if expenses %}
+
+    {% for expense in expenses %}
+    <div class="card w-96 grid-flow-col">
+        <div class="stats shadow text-primary-content border border-gray-400">
+            <div class="stat">
+                <div class="stat-title mx-auto"><strong>{{expense.name}}</strong></div>
+                <div class="stat-value mx-auto">{{expense.income}}</div>
+                <div class="stat-actions align-middle">
+                    <button class="btn btn-sm btn-warning  float-start">Update</button>
+                    <button class="btn btn-sm btn-error float-end"
+                        hx-delete="/delete/budget_item?budget_id={{budget.id}}"
+                        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#serverNotifications"
+                        hx-swap="innerHTML settle:2s">Delete</button>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="id_rating">Rating:</label>
-            <input type="number" id="id_rating" name="rating">
-        </div>
-        <button type="submit">Save</button>
-    </form>
+    </div>
+    {% endfor %}
+
+    {% endif %}
+
 </div>
