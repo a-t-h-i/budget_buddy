@@ -30,6 +30,4 @@ def leave_app(request):
 @login_required(login_url="login")
 def main_page(request):
     user = User.objects.get(pk=request.user.id)
-
-    print(f"User: {user}")
     return render(request, "budget_buddy/home_page.html", {"user": user})

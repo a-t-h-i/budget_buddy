@@ -11,7 +11,6 @@ from .models import Budget, Expense, Expense_Category
 
 
 def budget_view(request):
-
     try:
         budget_items = _get_budget_items(request.user.id)
 
