@@ -1,2 +1,0 @@
-#!/bin/sh
-./budget_buddy/manage.py runserver 8080
