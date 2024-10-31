@@ -10,12 +10,26 @@ import {
 import {
     Label
 } from "$lib/components/ui/label/index.js";
+import {
+    toast
+} from "svelte-sonner";
+import {
+    redirect
+} from '@sveltejs/kit';
+
 import Footer from "./partials/footer.svelte";
+	import { goto } from "$app/navigation";
+
 const moneySymbols = ['💵', '💰', '💳', '💴', '💶', '🏦', '🏧', '🤑', '💸', '🪙', '🧾', '📊', '📈', '📉', '🔍', '📅'];
+let Logo = $state(moneySymbols[Math.floor(Math.random() * moneySymbols.length)]);
+let userName = $state("");
+let userPassword = $state("");
+let correctUserDetails = $state(true);
 
-let Logo = $state();
-
-Logo = moneySymbols[Math.floor(Math.random() * moneySymbols.length)];
+function logUserIn() {
+    correctUserDetails = userName !== "" && userPassword !== "";
+    goto("/home");
+}
 </script>
 
 <div class="items-center p-2 rounded-xl m-2 mt-2 lg:h-[1020px] sm:h-screen my-auto border rounded-xl">
@@ -34,27 +48,31 @@ Logo = moneySymbols[Math.floor(Math.random() * moneySymbols.length)];
 
             <!-- Login tab -->
             <Tabs.Content value="account">
-                <form id="userLogin">
+                <form id="userLogin" onsubmit={logUserIn}>
                     <Card.Root>
 
                         <Card.Header class="items-center">
-                            <Card.Title>Welcome!</Card.Title>
-                            <Card.Description>
+                            <Card.Description  hidden={!correctUserDetails}>
                                 Please enter your login details to continue...
                             </Card.Description>
+
+                            <Card.Description class="text-red-400 font-black" hidden={correctUserDetails}>
+                                Incorrect password or user does not exist!
+                            </Card.Description>
+
                         </Card.Header>
 
                         <Card.Content class="space-y-2">
                             <!-- Username -->
                             <div class="space-y-1">
                                 <Label for="username">Username</Label>
-                                <Input id="username" placeholder="Username" />
+                                <Input id="username" placeholder="Username" bind:value={userName} />
                             </div>
 
                             <!-- Password -->
                             <div class="space-y-1">
                                 <Label for="username">Password</Label>
-                                <Input id="password" type="password"/>
+                                <Input id="password" type="password" bind:value={userPassword}/>
                             </div>
                         </Card.Content>
 
