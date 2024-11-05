@@ -3,8 +3,11 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
 	darkMode: ["class"],
-	content: ["./src/**/*.{html,js,svelte,ts}"],
+	content: ["./src/**/*.{html,js,svelte,ts}","./custom-styles.css",],
 	safelist: ["dark"],
+	daisyui: {
+		themes: false,
+	 },
 	plugins: [
 		require('daisyui'),
 	],
@@ -16,6 +19,7 @@ const config: Config = {
 				"2xl": "1400px"
 			}
 		},
+
 		extend: {
 			colors: {
 				border: "hsl(var(--border) / <alpha-value>)",

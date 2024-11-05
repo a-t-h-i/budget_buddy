@@ -1,121 +1,175 @@
 <script lang="ts">
-import {
-    Button
-} from "$lib/components/ui/button/index.js";
-import * as Card from "$lib/components/ui/card/index.js";
-import {
-    Badge
-} from "$lib/components/ui/badge/index.js";
-import * as Popover from "$lib/components/ui/popover/index.js";
-import {
-    Label
-} from "$lib/components/ui/label/index.js";
-import {
-    Input
-} from "$lib/components/ui/input/index.js";
-import Calendar from "$lib/components/ui/calendar/calendar.svelte";
-import {
-    Description
-} from "formsnap";
+	import * as echarts from 'echarts';
+	import { onMount } from 'svelte';
+	import * as Table from "$lib/components/ui/table/index.js";
+	onMount(() => {
+		let myChart = echarts.init(document.getElementById('pieChart'));
+		// Draw the chart
+		
+		myChart.setOption({
+			title: {
+				text: 'Income Distribution',
+			},
+			tooltip: {},
+			xAxis: {
+				data: ['Expenses', 'Savings', 'Investment']
+			},
+			yAxis: {},
+			series: [
+				{
+					name: 'sales',
+					type: 'pie',
+					data: [50,20,30]
+				},
+			]
+		});
 
-let expenseItems = $state([{
-        "name": "Groceries",
-        "price": "150",
-        "date": "01 September 2024",
-        "category": "Food"
+        let barChart = echarts.init(document.getElementById('barChart'));
+        barChart.setOption({
+			title: {
+				text: 'Expenses'
+			},
+			tooltip: {},
+			xAxis: {
+				data: ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks']
+			},
+			yAxis: {},
+			series: [
+				{
+					name: 'sales',
+					type: 'bar',
+					data: [5, 20, 36, 10, 10, 20]
+				}
+			]
+		});
+
+        let lineChart = echarts.init(document.getElementById('lineChart'));
+        lineChart.setOption({
+			title: {
+				text: 'Closing Balance'
+			},
+			tooltip: {},
+			xAxis: {
+				data: ['January', 'February', 'March', 'April', 'May', 'June']
+			},
+			yAxis: {},
+			series: [
+				{
+					name: 'Closing Balance',
+					type: 'line',
+					data: [233.0, 11.41, 336, 140, 610, 120]
+				}
+			]
+		});
+
+	});
+
+	let expenseItems = $state([
+    {
+        name: 'Groceries',
+        price: 49.99,
+        date: '01 September 2024',
+        category: 'Food',
+        budget: 'December Budget',
+        type: 'recurring'
     },
     {
-        "name": "Electricity",
-        "price": "200",
-        "date": "03 September 2024",
-        "category": "Utilities"
+        name: 'Electricity',
+        price: 49.02,
+        date: '03 September 2024',
+        category: 'Utilities',
+        budget: 'October Budget',
+        type: 'recurring'
     },
     {
-        "name": "Internet",
-        "price": "100",
-        "date": "05 September 2024",
-        "category": "Utilities"
+        name: 'Internet',
+        price: 400.29,
+        date: '05 September 2024',
+        category: 'Utilities',
+        budget: 'November Budget',
+        type: 'recurring'
+    },
+    {
+        name: 'Water',
+        price: 75.50,
+        date: '10 September 2024',
+        category: 'Utilities',
+        budget: 'September Budget',
+        type: 'recurring'
+    },
+    {
+        name: 'Rent',
+        price: 4000.00,
+        date: '01 October 2024',
+        category: 'Housing',
+        budget: 'October Budget',
+        type: 'recurring'
+    },
+    {
+        name: 'Dining Out',
+        price: 120.75,
+        date: '15 September 2024',
+        category: 'Entertainment',
+        budget: 'September Budget',
+        type: 'once-off'
+    },
+    {
+        name: 'Gym Membership',
+        price: 150.00,
+        date: '20 September 2024',
+        category: 'Health',
+        budget: 'September Budget',
+        type: 'recurring'
+    },
+    {
+        name: 'Transportation',
+        price: 60.00,
+        date: '25 September 2024',
+        category: 'Travel',
+        budget: 'September Budget',
+        type: 'once-off'
     }
 ]);
+
 </script>
 
-<div class="items-center">
+<div>
+	<!-- Graphs -->
+	<div class="grid lg:grid-cols-4 sm:grid-cols-2">
+		<div class="border rounded-xl lg:h-[20vw] m-1 p-2 hover:shadow-md transition duration-500 ease-in-out" id="pieChart"></div>
+		<div class="border rounded-xl lg:h-[20vw] m-1 p-2 hover:shadow-md transition duration-500 ease-in-out" id="barChart"></div>
+		<div class="border rounded-xl lg:h-[20vw] m-1 col-span-2 p-2  hover:shadow-md transition duration-500 ease-in-out" id="lineChart"></div>
+	</div>
 
-    <div>
-        
-    </div>
+	<!-- Table -->
+	<div>
+		<div class="lg:h-[100%] m-1 col-span-2">
+			
 
-    <div class="grid lg:grid-cols-4 sm:grid-cols-2 overflow-y-scroll">
-        {#each expenseItems as expense}
-        <Card.Root class="w-[90%] m-3">
+			<Table.Root class="p-2">
+			
+				<Table.Header>
+				  <Table.Row>
+					<Table.Head class="text-black">Date</Table.Head>
+					<Table.Head class="text-black">Name</Table.Head>
+					<Table.Head class="text-black">Category</Table.Head>
+					<Table.Head class="text-black">Budget</Table.Head>
+					<Table.Head class="text-black text-center">Amount</Table.Head>
+				  </Table.Row>
+				</Table.Header>
 
-            <Card.Header class="text-center p-1">
-                <Card.Title class="text-lg">{expense.name}</Card.Title>
-
-                <Card.Description>
-                    <span><Badge class="italic text-xs shadow-sm" variant="outline">{expense.category}</Badge></span>
-                </Card.Description>
-
-            </Card.Header>
-
-            <Card.Content class="text-center p-0">
-                <span><p class="my-auto text-3xl italic">ZAR {expense.price}</p></span>
-            </Card.Content>
-
-            <Card.Footer class="flex justify-between p-1.5">
-
-                <Popover.Root>
-                    <!-- Edit expense -->
-                    <Popover.Trigger asChild let:builder>
-                        <Button builders={[builder]} variant="outline">Edit</Button>
-                    </Popover.Trigger>
-
-                    <Popover.Content class="w-80">
-                        <div class="grid gap-4">
-                            <div class="space-y-2 text-center">
-                                <h4 class="font-medium leading-none">{expense.name}</h4>
-                                <p class="text-muted-foreground text-sm">
-                                    Update expense...
-                                </p>
-                            </div>
-
-                            <div class="grid gap-2">
-                                <div class="grid grid-cols-3 items-center gap-4">
-                                    <Label for="width">Name</Label>
-                                    <Input id="width" value="{expense.name}" class="col-span-2 h-8" />
-                                </div>
-        
-                                <div class="grid grid-cols-3 items-center gap-4">
-                                    <Label for="maxWidth">Budget</Label>
-                                    <Input id="maxWidth" value="{expense.category}" class="col-span-2 h-8" />
-                                </div>
-        
-                                <div class="grid grid-cols-3 items-center gap-4">
-                                    <Label for="maxWidth">Category</Label>
-                                    <Input id="maxWidth" value="{expense.category}" class="col-span-2 h-8" />
-                                </div>
-                                <div class="grid grid-cols-3 items-center gap-4">
-                                    <Label for="height">Amount</Label>
-                                    <Input id="height" value="{expense.price}" class="col-span-2 h-8" />
-                                </div>
-                                <div class="grid grid-cols-3 items-center gap-4">
-                                    <Label for="maxHeight">Date</Label>
-                                    <Input id="maxHeight" value="{expense.date}" class="col-span-2 h-8" />
-                                </div>
-
-                                <div>
-                                    <button class="w-[40%] btn btn-sm bg-orange-200 text-black border-none hover:bg-orange-300 hover:border-none hover:text-black float-end">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </Popover.Content>
-                </Popover.Root>
-
-                <button class="btn btn-sm bg-orange-200 text-black border-none hover:bg-orange-300 hover:border-none hover:text-black">X</button>
-            </Card.Footer>
-
-        </Card.Root>
-        {/each}
-    </div>
-
+				<Table.Body>
+				  {#each expenseItems as expense}
+					<Table.Row class="hover:bg-gray-200transition duration-500 ease-in-out">
+					  <Table.Cell class="">{expense.date}</Table.Cell>
+					  <Table.Cell class="">{expense.name}</Table.Cell>
+					  <Table.Cell class=""><span class="badge">{expense.category}</span></Table.Cell>
+					  <Table.Cell class="">{expense.budget}</Table.Cell>
+					  <Table.Cell class="text-center">R {expense.price}</Table.Cell>
+					</Table.Row>
+				  {/each}
+				</Table.Body>
+			</Table.Root>
+		</div>
+	</div>
 </div>

@@ -11,6 +11,7 @@ import Expenses from "./partials/expenses.svelte";
 import Analytics from "./partials/analytics.svelte";
 import Budget from "./partials/budget.svelte";
 import Goals from "./partials/goals.svelte";
+import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
 
 const users = $state([{
     id: 1,
@@ -32,16 +33,12 @@ function removeFooter(){
     hideFooter = !hideFooter;
 };
 
-function logOut() {
-    let logoutUser = users.filter((user) => user.id == userId).pop();
-    alert(`${logoutUser?.name} is logging out!`);
-};
 
 </script>
 
-<div class="items-center p-2 rounded-xl m-2 mt-2 lg:h-[1020px] sm:h-screen my-auto border rounded-xl">
+<div class="rounded-xl p-1 lg:h-full sm:h-screen">
 
-    <div class="container">
+    <div>
 
         <Tabs.Root value="account" class="lg:w-1200px mx-auto">
             <Tabs.List class="grid w-full grid-cols-6 h-fit rounded-xl bg-inherit border">
@@ -60,7 +57,7 @@ function logOut() {
                             </Avatar.Root>
                         </Menubar.Trigger>
 
-                        <Menubar.Content>
+                        <Menubar.Content class="">
                             <Menubar.Menu>
                                 <Menubar.Item class="hover:border rounded-md transition duration-300 ease-in-out">
                                     Profile
@@ -79,27 +76,37 @@ function logOut() {
 
             <!-- Home tab -->
             <Tabs.Content value="home">
-                <Home></Home>
+                <ScrollArea class="sm:h-screen sm:w-full lg:h-[46vw] rounded-xl border">
+                    <Home></Home>
+                </ScrollArea>
             </Tabs.Content>
 
             <!-- Expenses tab -->
             <Tabs.Content value="expenses">
-                <Expenses></Expenses>
+                <ScrollArea class="sm:h-screen sm:w-full lg:h-[46vw] rounded-xl border">
+                    <Expenses></Expenses>
+                </ScrollArea>
             </Tabs.Content>
 
             <!-- Analytics tab -->
             <Tabs.Content value="analytics">
-                <Analytics></Analytics>
+                <ScrollArea class="sm:h-screen sm:w-full lg:h-[46vw] rounded-xl border">
+                    <Analytics></Analytics>
+                </ScrollArea>
             </Tabs.Content>
 
             <!-- Budget tab -->
             <Tabs.Content value="budget">
-                <Budget></Budget>
+                <ScrollArea class="sm:h-screen sm:w-full lg:h-[46vw] rounded-xl border">
+                    <Budget></Budget>
+                </ScrollArea>
             </Tabs.Content>
 
             <!-- Goals tab -->
             <Tabs.Content value="goals">
-                <Goals></Goals>
+                <ScrollArea class="sm:h-screen sm:w-full lg:h-[46vw] rounded-xl border">
+                    <Goals></Goals>
+                </ScrollArea>
             </Tabs.Content>
 
         </Tabs.Root>
