@@ -40,7 +40,7 @@ function logUserIn() {
 
     <div class="container">
 
-        <Tabs.Root value="account" class="w-[30%] mx-auto">
+        <Tabs.Root value="account" class="w-[30%] mx-auto sm:hidden">
             <Tabs.List class="grid w-full grid-cols-2">
                 <Tabs.Trigger value="account">Login</Tabs.Trigger>
                 <Tabs.Trigger value="register">Register</Tabs.Trigger>

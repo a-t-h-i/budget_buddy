@@ -3,6 +3,6 @@
     let year = $state(new Date().getFullYear());
 </script>
 
-<Footer class="bg-gray-100 rounded-md p-2 m-2">
-    <footer class="mx-auto font-black">© Budget Buddy {year}</footer>
+<Footer class="bg-neutral-100 bottom-0">
+    <footer class="mx-auto">© Budget Buddy {year}</footer>
 </Footer>

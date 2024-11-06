@@ -143,12 +143,12 @@
 
 	<!-- Table -->
 	<div>
-		<div class="lg:h-[100%] m-1 col-span-2">
+		<div class="lg:h-[100%] m-1 col-span-2 rounded-lg">
 			
 
-			<Table.Root class="p-2">
+			<Table.Root class="p-2 border rounded-lg">
 			
-				<Table.Header>
+				<Table.Header class="bg-gray-200">
 				  <Table.Row>
 					<Table.Head class="text-black">Date</Table.Head>
 					<Table.Head class="text-black">Name</Table.Head>
@@ -158,12 +158,12 @@
 				  </Table.Row>
 				</Table.Header>
 
-				<Table.Body>
+				<Table.Body class="bg-gray-100">
 				  {#each expenseItems as expense}
 					<Table.Row class="hover:bg-gray-200transition duration-500 ease-in-out">
 					  <Table.Cell class="">{expense.date}</Table.Cell>
 					  <Table.Cell class="">{expense.name}</Table.Cell>
-					  <Table.Cell class=""><span class="badge">{expense.category}</span></Table.Cell>
+					  <Table.Cell class=""><span class="badge badge-outline bg-green-100 badge-sm  shadow-sm border-none font-bold text-green-800">{expense.category}</span></Table.Cell>
 					  <Table.Cell class="">{expense.budget}</Table.Cell>
 					  <Table.Cell class="text-center">R {expense.price}</Table.Cell>
 					</Table.Row>

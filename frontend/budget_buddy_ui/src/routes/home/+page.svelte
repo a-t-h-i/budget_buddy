@@ -1,18 +1,14 @@
 <script lang="ts">
 import * as Tabs from "$lib/components/ui/tabs/index.js";
-import * as Avatar from "$lib/components/ui/avatar";
-import * as Menubar from "$lib/components/ui/menubar/index.js";
-
-
 // Partials
 import Home from "./partials/home.svelte";
 import Footer from "../partials/footer.svelte";
 import Expenses from "./partials/expenses.svelte";
 import Analytics from "./partials/analytics.svelte";
 import Budget from "./partials/budget.svelte";
-import Goals from "./partials/goals.svelte";
+import { cn } from "$lib/utils"
 import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
-
+import ProfileMenu from "./partials/profile_menu.svelte";
 const users = $state([{
     id: 1,
     name: "Steve"
@@ -36,42 +32,21 @@ function removeFooter(){
 
 </script>
 
-<div class="rounded-xl p-1 lg:h-full sm:h-screen">
+<div class="p-1 bg-neutral-100 aspect-auto">
 
     <div>
+        <Tabs.Root value="home" class="mx-auto">
 
-        <Tabs.Root value="account" class="lg:w-1200px mx-auto">
-            <Tabs.List class="grid w-full grid-cols-6 h-fit rounded-xl bg-inherit border">
-                <Tabs.Trigger value="home" class="p-2 font-black rounded-xl hover:shadow-md hover:border transition duration-300 ease-in-out">Home</Tabs.Trigger>
-                <Tabs.Trigger value="expenses" class="p-2 font-black rounded-xl hover:shadow-md hover:border transition duration-300 ease-in-out">Expenses</Tabs.Trigger>
-                <Tabs.Trigger value="analytics" class="p-2 font-black rounded-xl hover:shadow-md hover:border transition duration-300 ease-in-out">Analytics</Tabs.Trigger>
-                <Tabs.Trigger value="budget" class="p-2 font-black rounded-xl hover:shadow-md hover:border transition duration-300 ease-in-out">Budget</Tabs.Trigger>
-                <Tabs.Trigger value="goals" class="p-2 font-black rounded-xl hover:shadow-md hover:border transition duration-300 ease-in-out">Goals</Tabs.Trigger>
-
-                <Menubar.Root class="shadow-none border-none bg-inherit w-[10%]">
-                    <Menubar.Menu>
-                        <Menubar.Trigger>
-                            <Avatar.Root class="rounded-md">
-                                <Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
-                                <Avatar.Fallback>User</Avatar.Fallback>
-                            </Avatar.Root>
-                        </Menubar.Trigger>
-
-                        <Menubar.Content class="">
-                            <Menubar.Menu>
-                                <Menubar.Item class="hover:border rounded-md transition duration-300 ease-in-out">
-                                    Profile
-                                </Menubar.Item>
-
-                                <Menubar.Item on:click={removeFooter} class="hover:border rounded-md transition duration-300 ease-in-out">
-                                    Log Out
-                                </Menubar.Item>
-                            </Menubar.Menu>
-                        </Menubar.Content>
-                        
-                    </Menubar.Menu>
-                </Menubar.Root>
-
+            <Tabs.List class="grid lg:w-fit grid-cols-5 h-fit rounded-2xl mx-auto bg-glass border shadow-lg">
+                <Tabs.Trigger value="home" class="p-2 mr-1 hover:bg-gray-100 rounded-xl transition duration-500 ease-in-out {cn("data-[state=active]:bg-gray-200 data-[state=active]:text-gray-500 data-[state=active]:font-black data-[state=active]:border")}">Home</Tabs.Trigger>
+                <Tabs.Trigger value="expenses" class="p-2 mr-1 hover:bg-gray-100 rounded-xl  transition duration-500 ease-in-out {cn("data-[state=active]:bg-gray-200 data-[state=active]:text-gray-500 data-[state=active]:font-black data-[state=active]:border")}">Expenses</Tabs.Trigger>
+                <Tabs.Trigger value="analytics" class="p-2 mr-1 hover:bg-gray-100 rounded-xl transition duration-500 ease-in-out {cn("data-[state=active]:bg-gray-200 data-[state=active]:text-gray-500 data-[state=active]:font-black data-[state=active]:border")}">Analytics</Tabs.Trigger>
+                <Tabs.Trigger value="budget" class="p-2 mr-1 hover:bg-gray-100 rounded-xl transition duration-500 ease-in-out {cn("data-[state=active]:bg-gray-200 data-[state=active]:text-gray-500 data-[state=active]:font-black data-[state=active]:border")}">Budget</Tabs.Trigger>
+                
+                <!-- Profile dropdown -->
+                <ProfileMenu></ProfileMenu>
+                
+                
             </Tabs.List>
 
             <!-- Home tab -->
@@ -83,9 +58,9 @@ function removeFooter(){
 
             <!-- Expenses tab -->
             <Tabs.Content value="expenses">
-                <ScrollArea class="sm:h-screen sm:w-full lg:h-[46vw] rounded-xl border">
+                
                     <Expenses></Expenses>
-                </ScrollArea>
+              
             </Tabs.Content>
 
             <!-- Analytics tab -->
@@ -101,14 +76,6 @@ function removeFooter(){
                     <Budget></Budget>
                 </ScrollArea>
             </Tabs.Content>
-
-            <!-- Goals tab -->
-            <Tabs.Content value="goals">
-                <ScrollArea class="sm:h-screen sm:w-full lg:h-[46vw] rounded-xl border">
-                    <Goals></Goals>
-                </ScrollArea>
-            </Tabs.Content>
-
         </Tabs.Root>
     </div>
 
