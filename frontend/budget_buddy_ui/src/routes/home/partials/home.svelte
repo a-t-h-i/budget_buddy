@@ -135,7 +135,7 @@
 
 <div>
 	<!-- Graphs -->
-	<div class="grid lg:grid-cols-4 sm:grid-cols-2">
+	<div class="grid lg:grid-cols-4 sm:grid-cols-1">
 		<div class="border rounded-xl lg:h-[20vw] m-1 p-2 hover:shadow-md transition duration-500 ease-in-out" id="pieChart"></div>
 		<div class="border rounded-xl lg:h-[20vw] m-1 p-2 hover:shadow-md transition duration-500 ease-in-out" id="barChart"></div>
 		<div class="border rounded-xl lg:h-[20vw] m-1 col-span-2 p-2  hover:shadow-md transition duration-500 ease-in-out" id="lineChart"></div>
@@ -143,7 +143,7 @@
 
 	<!-- Table -->
 	<div>
-		<div class="lg:h-[100%] m-1 col-span-2 rounded-lg">
+		<div class="lg:h-[100%] m-1 lg:col-span-2 rounded-lg">
 			
 
 			<Table.Root class="p-2 border rounded-lg">

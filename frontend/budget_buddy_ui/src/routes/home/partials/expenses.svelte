@@ -8,7 +8,9 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { ScrollArea } from '$lib/components/ui/scroll-area/index.js';
-
+	import DatePicker from './date_picker.svelte';
+	import * as Carousel from "$lib/components/ui/carousel/index.js";
+	
 	let expenseItems = $state([
 		{
 			name: 'Groceries',
@@ -192,8 +194,9 @@
 	]);
 </script>
 
-<div class="lg:h-screen transparent">
-	<div class="ml-12 mx-auto grid lg:grid-cols-4 sm:grid-cols-2">
+<div class="h-screen">
+	<!-- Desktop Widgets -->
+	<div class="ml-12 mx-auto grid grid-cols-4 sm:hidden">
 		<!-- Expenses count -->
 		<div
 			class="items-center text-center p-2 rounded-xl hover:shadow-md transition duration-300 bg-gray-100 glass w-[15vw] border-gray-200"
@@ -202,7 +205,7 @@
 				<p class="text-md font-bold text-gray-600">Expenses</p>
 			</div>
 			<div
-				class="text-2xl font-bold text-slate-700 border-none hover:animate-pulse transition duration-500 bg-slate-200 rounded-lg p-2"
+				class="text-2xl font-bold text-slate-700 border-none  transition duration-500 bg-slate-200 rounded-lg p-2"
 			>
 				{totalExpenses}
 			</div>
@@ -216,7 +219,7 @@
 				<p class="text-md font-bold text-gray-600">Remaining balance</p>
 			</div>
 			<div
-				class="text-2xl font-bold text-green-700 border-none hover:animate-pulse transition duration-500 bg-slate-200 rounded-lg p-2"
+				class="text-2xl font-bold text-green-700 border-none  transition duration-500 bg-slate-200 rounded-lg p-2"
 			>
 				+{currency}
 				{totalSpent}
@@ -231,7 +234,7 @@
 				<p class="text-md font-bold text-gray-600">Total Spent</p>
 			</div>
 			<div
-				class="text-2xl font-bold text-red-700 border-none hover:animate-pulse transition duration-500 bg-red-100 rounded-lg p-2"
+				class="text-2xl font-bold text-red-700 border-none  transition duration-500 bg-red-100 rounded-lg p-2"
 			>
 				{currency}
 				-{totalSpent}
@@ -246,7 +249,7 @@
 				<p class="text-md font-bold text-gray-600">Most Expensive</p>
 			</div>
 			<div
-				class="text-2xl font-bold text-red-700 border-none hover:animate-pulse transition duration-500 bg-red-100 rounded-lg p-2"
+				class="text-2xl font-bold text-red-700 border-none  transition duration-500 bg-red-100 rounded-lg p-2"
 			>
 				{mostExpensive}
 			</div>
@@ -254,7 +257,72 @@
 
 	</div>
 
-	<ScrollArea class="sm:h-screen sm:w-full lg:h-[39vw] rounded-xl border mt-2">
+	<!-- Mobile Widgets -->
+	 
+	<div class="lg:hidden grid grid-cols-2 items-center p-2">
+
+		<div class="transparent border-none rounded-xl items-center text-center shadow-sm p-2 col-span-2">
+			<div class="m-2 p-1 text-md font-bold text-gray-600">
+				<h2>Top 3 Expenses</h2>
+			</div>
+
+			<div>
+				<Carousel.Root class="max-w-xs mx-auto transparent">
+					<Carousel.Content>
+					  {#each Array(5) as _, i (i)}
+						<Carousel.Item>
+						  <div>
+							<Card.Root>
+							  <Card.Content
+								class="flex aspect-rectangle items-center justify-center h-[150px] transparent border rounded-xl -p-4"
+							  >
+								<div class="h-[150px] w-full rounded-xl shadow-md">
+									
+								</div>
+								
+							  </Card.Content>
+							</Card.Root>
+						  </div>
+						</Carousel.Item>
+					  {/each}
+					</Carousel.Content>
+				  </Carousel.Root>
+				  
+			</div>
+		</div>
+
+		<!-- Remaining balance -->
+		<div
+			class="items-center text-center p-2 rounded-xl shadow-md transition duration-300 bg-gray-100 glass w-fit border-gray-600 mt-2"
+		>
+			<div class="p-1">
+				<p class="text-md font-bold text-gray-600">Remaining balance</p>
+			</div>
+			<div
+				class="text-2xl font-bold text-emerald-900 border-none  transition duration-500 bg-slate-200 rounded-lg p-2"
+			>
+				+{currency}	
+				{totalSpent}
+			</div>
+		</div>
+
+		<!-- Total amount Spent -->
+		<div
+			class="items-center text-center p-2 ml-2 rounded-xl transition duration-300 bg-gray-100 glass w-fit  border-none shadow-md mt-2"
+		>
+			<div class="p-1">
+				<p class="text-md font-bold text-gray-600">Total Spent</p>
+			</div>
+			<div
+				class="text-2xl font-bold text-rose-900 transition duration-500 bg-red-100 rounded-lg p-2"
+			>
+				{currency}
+				-{totalSpent}
+			</div>
+		</div>
+	</div>
+
+	<ScrollArea class="sm:h-screen sm:w-full lg:h-[39vw] rounded-xl border mt-2 ">
 		<div class="grid lg:grid-cols-4 sm:grid-cols-2">
 			{#each expenseItems as expense}
 				<Card.Root class="lg:w-[90%] m-3 sm:w-[50%]">
@@ -425,13 +493,14 @@
 				<!-- Expense date -->
 				<div class="grid grid-cols-4 items-center gap-2">
 					<Label for="username" class="text-left">Date</Label>
-					<input type="date" />
+					<DatePicker></DatePicker>
 				</div>
 			</div>
 
 			<Dialog.Footer>
 				<Button type="submit" class="mx-auto">Save</Button>
 			</Dialog.Footer>
+
 		</Dialog.Content>
 	</Dialog.Root>
 </div>

@@ -26,10 +26,6 @@ let userName = $state("");
 let userPassword = $state("");
 let correctUserDetails = $state(true);
 
-function logUserIn() {
-    correctUserDetails = userName !== "" && userPassword !== "";
-    goto("/home");
-}
 </script>
 
 <div class="items-center p-2 rounded-xl m-2 mt-2 lg:h-[1020px] sm:h-screen my-auto border rounded-xl">
@@ -38,9 +34,9 @@ function logUserIn() {
         <h6 class="font-black text-3xl antialiased mt-10">budgetBuddy <span class="hover:scale-110 transition duration-300 ease-in-out">{Logo}</span></h6>
     </div>
 
-    <div class="container">
+    <div>
 
-        <Tabs.Root value="account" class="w-[30%] mx-auto sm:hidden">
+        <Tabs.Root value="account" class="w-[30%] mx-auto">
             <Tabs.List class="grid w-full grid-cols-2">
                 <Tabs.Trigger value="account">Login</Tabs.Trigger>
                 <Tabs.Trigger value="register">Register</Tabs.Trigger>
@@ -48,7 +44,7 @@ function logUserIn() {
 
             <!-- Login tab -->
             <Tabs.Content value="account">
-                <form id="userLogin" onsubmit={logUserIn}>
+                <form id="userLogin">
                     <Card.Root>
 
                         <Card.Header class="items-center">
