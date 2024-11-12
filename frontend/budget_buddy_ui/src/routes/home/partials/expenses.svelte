@@ -196,7 +196,7 @@
 
 <div class="h-screen">
 	<!-- Desktop Widgets -->
-	<div class="ml-12 mx-auto grid grid-cols-4 sm:hidden">
+	<div class="ml-12 mx-auto grid grid-cols-4">
 		<!-- Expenses count -->
 		<div
 			class="items-center text-center p-2 rounded-xl hover:shadow-md transition duration-300 bg-gray-100 glass w-[15vw] border-gray-200"

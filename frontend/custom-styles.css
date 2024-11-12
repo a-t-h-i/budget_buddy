@@ -1,0 +1,3 @@
+.hover-effect {
+    @apply hover:shadow-md transition duration-500 ease-in-out hover:scale-105;
+}
