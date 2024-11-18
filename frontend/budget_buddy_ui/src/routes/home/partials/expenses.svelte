@@ -7,43 +7,10 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
-	import { ScrollArea } from '$lib/components/ui/scroll-area/index.js';
 	import DatePicker from './date_picker.svelte';
-	import * as Carousel from "$lib/components/ui/carousel/index.js";
 	
 	let expenseItems = $state([
-		{
-			name: 'Groceries',
-			price: 49.99,
-			date: '01 September 2024',
-			category: 'Food',
-			budget: 'December Budget',
-			type: 'recurring'
-		},
-		{
-			name: 'Electricity',
-			price: 49.02,
-			date: '03 September 2024',
-			category: 'Utilities',
-			budget: 'October Budget',
-			type: 'recurring'
-		},
-		{
-			name: 'Internet',
-			price: 400.29,
-			date: '05 September 2024',
-			category: 'Utilities',
-			budget: 'November Budget',
-			type: 'recurring'
-		},
-		{
-			name: 'Water',
-			price: 75.5,
-			date: '10 September 2024',
-			category: 'Utilities',
-			budget: 'September Budget',
-			type: 'recurring'
-		},
+		
 		{
 			name: 'Rent',
 			price: 4000.0,
@@ -115,68 +82,9 @@
 			category: 'Travel',
 			budget: 'September Budget',
 			type: 'once-off'
-		},
-		{
-			name: 'Transportation',
-			price: 60.0,
-			date: '25 September 2024',
-			category: 'Travel',
-			budget: 'September Budget',
-			type: 'once-off'
-		},
-		{
-			name: 'Transportation',
-			price: 60.0,
-			date: '25 September 2024',
-			category: 'Travel',
-			budget: 'September Budget',
-			type: 'once-off'
-		},
-		{
-			name: 'Transportation',
-			price: 60.0,
-			date: '25 September 2024',
-			category: 'Travel',
-			budget: 'September Budget',
-			type: 'once-off'
-		},
-		{
-			name: 'Transportation',
-			price: 60.0,
-			date: '25 September 2024',
-			category: 'Travel',
-			budget: 'September Budget',
-			type: 'once-off'
-		},
-		{
-			name: 'Transportation',
-			price: 60.0,
-			date: '25 September 2024',
-			category: 'Travel',
-			budget: 'September Budget',
-			type: 'once-off'
-		},
-		{
-			name: 'Transportation',
-			price: 60.0,
-			date: '25 September 2024',
-			category: 'Travel',
-			budget: 'September Budget',
-			type: 'once-off'
-		},
-		{
-			name: 'Transportation',
-			price: 60.0,
-			date: '25 September 2024',
-			category: 'Travel',
-			budget: 'September Budget',
-			type: 'once-off'
 		}
 	]);
-
-	let totalExpenses = $derived(expenseItems.length);
 	let totalSpent = $derived(expenseItems.reduce((total, expense) => total + expense.price, 0));
-	let mostExpensive = $state('Rent');
 	let currency = $state('R');
 
 	let expenseCategory = $state([
@@ -193,314 +101,216 @@
 		{ name: 'Outing Budget', id: 9 }
 	]);
 </script>
+<!-- Mobile Widgets -->
+<div class="hidden sm:show grid grid-cols-2 items-center p-2">
 
-<div class="h-screen">
-	<!-- Desktop Widgets -->
-	<div class="ml-12 mx-auto grid grid-cols-4">
-		<!-- Expenses count -->
-		<div
-			class="items-center text-center p-2 rounded-xl hover:shadow-md transition duration-300 bg-gray-100 glass w-[15vw] border-gray-200"
-		>
-			<div class="p-1">
-				<p class="text-md font-bold text-gray-600">Expenses</p>
-			</div>
-			<div
-				class="text-2xl font-bold text-slate-700 border-none  transition duration-500 bg-slate-200 rounded-lg p-2"
-			>
-				{totalExpenses}
-			</div>
+	<!-- Remaining balance -->
+	<div
+		class="items-center text-center p-2 rounded-xl shadow-md transition duration-300 bg-gray-100 glass backdrop-blur-md w-fit border-gray-600 mt-2"
+	>
+		<div class="p-1">
+			<p class="text-md font-bold text-gray-600">Remaining balance</p>
 		</div>
-
-		<!-- Remaining balance -->
 		<div
-			class="items-center text-center p-2 rounded-xl hover:shadow-md transition duration-300 bg-gray-100 glass w-[15vw] border-gray-200"
+			class="text-2xl font-bold text-emerald-900 border-none  transition duration-500 bg-slate-200 rounded-lg p-2"
 		>
-			<div class="p-1">
-				<p class="text-md font-bold text-gray-600">Remaining balance</p>
-			</div>
-			<div
-				class="text-2xl font-bold text-green-700 border-none  transition duration-500 bg-slate-200 rounded-lg p-2"
-			>
-				+{currency}
-				{totalSpent}
-			</div>
-		</div>
-
-		<!-- Total amount Spent -->
-		<div
-			class="items-center text-center p-2 rounded-xl hover:shadow-md transition duration-300 bg-gray-100 glass w-[15vw] border-gray-200"
-		>
-			<div class="p-1">
-				<p class="text-md font-bold text-gray-600">Total Spent</p>
-			</div>
-			<div
-				class="text-2xl font-bold text-red-700 border-none  transition duration-500 bg-red-100 rounded-lg p-2"
-			>
-				{currency}
-				-{totalSpent}
-			</div>
-		</div>
-
-		<!-- Highest amount spent -->
-		<div
-			class="items-center text-center p-2 rounded-xl hover:shadow-md transition duration-300 bg-slate-100 glass w-[15vw] border-gray-200"
-		>
-			<div class="p-1">
-				<p class="text-md font-bold text-gray-600">Most Expensive</p>
-			</div>
-			<div
-				class="text-2xl font-bold text-red-700 border-none  transition duration-500 bg-red-100 rounded-lg p-2"
-			>
-				{mostExpensive}
-			</div>
-		</div>
-
-	</div>
-
-	<!-- Mobile Widgets -->
-	 
-	<div class="lg:hidden grid grid-cols-2 items-center p-2">
-
-		<div class="transparent border-none rounded-xl items-center text-center shadow-sm p-2 col-span-2">
-			<div class="m-2 p-1 text-md font-bold text-gray-600">
-				<h2>Top 3 Expenses</h2>
-			</div>
-
-			<div>
-				<Carousel.Root class="max-w-xs mx-auto transparent">
-					<Carousel.Content>
-					  {#each Array(5) as _, i (i)}
-						<Carousel.Item>
-						  <div>
-							<Card.Root>
-							  <Card.Content
-								class="flex aspect-rectangle items-center justify-center h-[150px] transparent border rounded-xl -p-4"
-							  >
-								<div class="h-[150px] w-full rounded-xl shadow-md">
-									
-								</div>
-								
-							  </Card.Content>
-							</Card.Root>
-						  </div>
-						</Carousel.Item>
-					  {/each}
-					</Carousel.Content>
-				  </Carousel.Root>
-				  
-			</div>
-		</div>
-
-		<!-- Remaining balance -->
-		<div
-			class="items-center text-center p-2 rounded-xl shadow-md transition duration-300 bg-gray-100 glass w-fit border-gray-600 mt-2"
-		>
-			<div class="p-1">
-				<p class="text-md font-bold text-gray-600">Remaining balance</p>
-			</div>
-			<div
-				class="text-2xl font-bold text-emerald-900 border-none  transition duration-500 bg-slate-200 rounded-lg p-2"
-			>
-				+{currency}	
-				{totalSpent}
-			</div>
-		</div>
-
-		<!-- Total amount Spent -->
-		<div
-			class="items-center text-center p-2 ml-2 rounded-xl transition duration-300 bg-gray-100 glass w-fit  border-none shadow-md mt-2"
-		>
-			<div class="p-1">
-				<p class="text-md font-bold text-gray-600">Total Spent</p>
-			</div>
-			<div
-				class="text-2xl font-bold text-rose-900 transition duration-500 bg-red-100 rounded-lg p-2"
-			>
-				{currency}
-				-{totalSpent}
-			</div>
+			+{currency}	
+			{totalSpent}
 		</div>
 	</div>
 
-	<ScrollArea class="sm:h-screen sm:w-full lg:h-[39vw] rounded-xl border mt-2 ">
-		<div class="grid lg:grid-cols-4 sm:grid-cols-2">
-			{#each expenseItems as expense}
-				<Card.Root class="lg:w-[90%] m-3 sm:w-[50%]">
-					<Card.Header class="text-center p-1">
-						<Card.Title class="text-md">{expense.name} - {expense.date}</Card.Title>
-
-						<Card.Description>
-							<span>
-								<Badge class="italic text-xs shadow-sm" variant="outline">{expense.category}</Badge>
-							</span>
-						</Card.Description>
-					</Card.Header>
-
-					<Card.Content class="text-center p-0">
-						<span><p class="my-auto text-3xl italic">{currency} {expense.price}</p></span>
-					</Card.Content>
-
-					<Card.Footer class="flex justify-between p-1.5">
-						<!-- Edit expense pop up -->
-
-						<Dialog.Root>
-							<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit</Dialog.Trigger>
-
-							<Dialog.Content class="sm:max-w-[400px]">
-								<Dialog.Header>
-									<Dialog.Title class="text-center">{expense.name}</Dialog.Title>
-								</Dialog.Header>
-
-								<div class="grid gap-2 -py-1">
-									<!-- Expense name -->
-									<div class="grid grid-cols-4 items-center gap-2">
-										<Label for="name" class="text-left">Name</Label>
-										<Input id="name" value={expense.name} class="col-span-3 w-[260px]" />
-									</div>
-
-									<!-- Expense type -->
-									<div class="grid grid-cols-4 items-center gap-2">
-										<Label for="username" class="text-left">Type:</Label>
-
-										<Select.Root>
-											<Select.Trigger class="w-[260px]">
-												<Select.Value placeholder={expense.category} />
-											</Select.Trigger>
-											<Select.Content>
-												<Select.Group>
-													<Select.Label>Type</Select.Label>
-													{#each expenseCategory as type}
-														<Select.Item value={type.id} label={type.name}>{type.name}</Select.Item>
-													{/each}
-												</Select.Group>
-											</Select.Content>
-											<Select.Input name="expense_type" />
-										</Select.Root>
-									</div>
-
-									<!-- Linked budget -->
-									<div class="grid grid-cols-4 items-center gap-2">
-										<Label for="username" class="text-left">Budget:</Label>
-
-										<Select.Root>
-											<Select.Trigger class="w-[260px]">
-												<Select.Value placeholder={expense.budget} />
-											</Select.Trigger>
-											<Select.Content>
-												<Select.Group>
-													<Select.Label>Budget</Select.Label>
-													{#each userBudgets as budget}
-														<Select.Item value={budget.id} label={budget.name}
-															>{budget.name}</Select.Item
-														>
-													{/each}
-												</Select.Group>
-											</Select.Content>
-											<Select.Input name="expense_type" />
-										</Select.Root>
-									</div>
-
-									<!-- Expense amount -->
-									<div class="grid grid-cols-4 items-center gap-2">
-										<Label for="amount" class="text-left">Amount:</Label>
-										<Input id="amount" value={expense.price} class="col-span-3" />
-									</div>
-
-									<!-- Expense date -->
-									<div class="grid grid-cols-4 items-center gap-2">
-										<Label for="username" class="text-left">Date</Label>
-										<input type="date" />
-									</div>
-								</div>
-
-								<Dialog.Footer>
-									<Button type="submit" class="mx-auto">Update</Button>
-								</Dialog.Footer>
-							</Dialog.Content>
-						</Dialog.Root>
-
-						<Button class={buttonVariants({ variant: 'outline' })}>X</Button>
-					</Card.Footer>
-				</Card.Root>
-			{/each}
+	<!-- Total amount Spent -->
+	<div
+		class="items-center text-center p-2 ml-2 rounded-xl transition duration-300 bg-gray-100 glass w-fit backdrop-blur-md  border-none shadow-md mt-2"
+	>
+		<div class="p-1">
+			<p class="text-md font-bold text-gray-600">Total Spent</p>
 		</div>
-	</ScrollArea>
-
-	<Dialog.Root>
-		<Dialog.Trigger
-			class="btn fixed bottom-4 right-4 text-white py-2 px-4 rounded-3xl hover:font-bold hover:scale-95 transition duration-200 ease-in-out"
-			>Add</Dialog.Trigger
+		<div
+			class="text-2xl font-bold text-rose-900 transition duration-500 bg-red-100 rounded-lg p-2"
 		>
-
-		<Dialog.Content class="sm:max-w-[400px]">
-			<Dialog.Header>
-				<Dialog.Title class="text-center">Add new expense</Dialog.Title>
-			</Dialog.Header>
-
-			<div class="grid gap-2 -py-1">
-				<!-- Expense name -->
-				<div class="grid grid-cols-4 items-center gap-2">
-					<Label for="name" class="text-left">Name</Label>
-					<Input id="name" class="col-span-3 w-[260px]" />
-				</div>
-
-				<!-- Expense type -->
-				<div class="grid grid-cols-4 items-center gap-2">
-					<Label for="username" class="text-left">Type:</Label>
-
-					<Select.Root>
-						<Select.Trigger class="w-[260px]">
-							<Select.Value />
-						</Select.Trigger>
-						<Select.Content>
-							<Select.Group>
-								<Select.Label>Type</Select.Label>
-								{#each expenseCategory as type}
-									<Select.Item value={type.id} label={type.name}>{type.name}</Select.Item>
-								{/each}
-							</Select.Group>
-						</Select.Content>
-						<Select.Input name="expense_type" />
-					</Select.Root>
-				</div>
-
-				<!-- Linked budget -->
-				<div class="grid grid-cols-4 items-center gap-2">
-					<Label for="username" class="text-left">Budget:</Label>
-
-					<Select.Root>
-						<Select.Trigger class="w-[260px]">
-							<Select.Value />
-						</Select.Trigger>
-						<Select.Content>
-							<Select.Group>
-								<Select.Label>Budget</Select.Label>
-								{#each userBudgets as budget}
-									<Select.Item value={budget.id} label={budget.name}>{budget.name}</Select.Item>
-								{/each}
-							</Select.Group>
-						</Select.Content>
-						<Select.Input name="expense_type" />
-					</Select.Root>
-				</div>
-
-				<!-- Expense amount -->
-				<div class="grid grid-cols-4 items-center gap-2">
-					<Label for="amount" class="text-left">Amount:</Label>
-					<Input id="amount" class="col-span-3" />
-				</div>
-
-				<!-- Expense date -->
-				<div class="grid grid-cols-4 items-center gap-2">
-					<Label for="username" class="text-left">Date</Label>
-					<DatePicker></DatePicker>
-				</div>
-			</div>
-
-			<Dialog.Footer>
-				<Button type="submit" class="mx-auto">Save</Button>
-			</Dialog.Footer>
-
-		</Dialog.Content>
-	</Dialog.Root>
+			{currency}
+			-{totalSpent}
+		</div>
+	</div>
 </div>
+
+<div class="grid lg:grid-cols-4 sm:grid-cols-2">
+	{#each expenseItems as expense}
+		<Card.Root class="lg:w-[90%] m-3 sm:w-[50%]">
+			<Card.Header class="text-center p-1">
+				<Card.Title class="text-md">{expense.name} - {expense.date}</Card.Title>
+
+				<Card.Description>
+					<span>
+						<Badge class="italic text-xs shadow-sm" variant="outline">{expense.category}</Badge>
+					</span>
+				</Card.Description>
+			</Card.Header>
+
+			<Card.Content class="text-center p-0">
+				<span><p class="my-auto text-3xl italic">{currency} {expense.price}</p></span>
+			</Card.Content>
+
+			<Card.Footer class="flex justify-between p-1.5">
+				<!-- Edit expense pop up -->
+
+				<Dialog.Root>
+					<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit</Dialog.Trigger>
+
+					<Dialog.Content class="sm:max-w-[400px]">
+						<Dialog.Header>
+							<Dialog.Title class="text-center">{expense.name}</Dialog.Title>
+						</Dialog.Header>
+
+						<div class="grid gap-2 -py-1">
+							<!-- Expense name -->
+							<div class="grid grid-cols-4 items-center gap-2">
+								<Label for="name" class="text-left">Name</Label>
+								<Input id="name" value={expense.name} class="col-span-3 w-[260px]" />
+							</div>
+
+							<!-- Expense type -->
+							<div class="grid grid-cols-4 items-center gap-2">
+								<Label for="username" class="text-left">Type:</Label>
+
+								<Select.Root>
+									<Select.Trigger class="w-[260px]">
+										<Select.Value placeholder={expense.category} />
+									</Select.Trigger>
+									<Select.Content>
+										<Select.Group>
+											<Select.Label>Type</Select.Label>
+											{#each expenseCategory as type}
+												<Select.Item value={type.id} label={type.name}>{type.name}</Select.Item>
+											{/each}
+										</Select.Group>
+									</Select.Content>
+									<Select.Input name="expense_type" />
+								</Select.Root>
+							</div>
+
+							<!-- Linked budget -->
+							<div class="grid grid-cols-4 items-center gap-2">
+								<Label for="username" class="text-left">Budget:</Label>
+
+								<Select.Root>
+									<Select.Trigger class="w-[260px]">
+										<Select.Value placeholder={expense.budget} />
+									</Select.Trigger>
+									<Select.Content>
+										<Select.Group>
+											<Select.Label>Budget</Select.Label>
+											{#each userBudgets as budget}
+												<Select.Item value={budget.id} label={budget.name}
+													>{budget.name}</Select.Item
+												>
+											{/each}
+										</Select.Group>
+									</Select.Content>
+									<Select.Input name="expense_type" />
+								</Select.Root>
+							</div>
+
+							<!-- Expense amount -->
+							<div class="grid grid-cols-4 items-center gap-2">
+								<Label for="amount" class="text-left">Amount:</Label>
+								<Input id="amount" value={expense.price} class="col-span-3" />
+							</div>
+
+							<!-- Expense date -->
+							<div class="grid grid-cols-4 items-center gap-2">
+								<Label for="username" class="text-left">Date</Label>
+								<input type="date" />
+							</div>
+						</div>
+
+						<Dialog.Footer>
+							<Button type="submit" class="mx-auto">Update</Button>
+						</Dialog.Footer>
+					</Dialog.Content>
+				</Dialog.Root>
+
+				<Button class={buttonVariants({ variant: 'outline' })}>X</Button>
+			</Card.Footer>
+		</Card.Root>
+	{/each}
+</div>
+
+<Dialog.Root>
+	<Dialog.Trigger
+		class="btn fixed bottom-4 right-4 text-white py-2 px-4 rounded-3xl hover:font-bold hover:scale-95 transition duration-200 ease-in-out sm:mb-10"
+		>Add</Dialog.Trigger
+	>
+
+	<Dialog.Content class="sm:max-w-[400px]">
+		<Dialog.Header>
+			<Dialog.Title class="text-center">Add new expense</Dialog.Title>
+		</Dialog.Header>
+
+		<div class="grid gap-2 -py-1">
+			<!-- Expense name -->
+			<div class="grid grid-cols-4 items-center gap-2">
+				<Label for="name" class="text-left">Name</Label>
+				<Input id="name" class="col-span-3 w-[260px]" />
+			</div>
+
+			<!-- Expense type -->
+			<div class="grid grid-cols-4 items-center gap-2">
+				<Label for="username" class="text-left">Type:</Label>
+
+				<Select.Root>
+					<Select.Trigger class="w-[260px]">
+						<Select.Value />
+					</Select.Trigger>
+					<Select.Content>
+						<Select.Group>
+							<Select.Label>Type</Select.Label>
+							{#each expenseCategory as type}
+								<Select.Item value={type.id} label={type.name}>{type.name}</Select.Item>
+							{/each}
+						</Select.Group>
+					</Select.Content>
+					<Select.Input name="expense_type" />
+				</Select.Root>
+			</div>
+
+			<!-- Linked budget -->
+			<div class="grid grid-cols-4 items-center gap-2">
+				<Label for="username" class="text-left">Budget:</Label>
+
+				<Select.Root>
+					<Select.Trigger class="w-[260px]">
+						<Select.Value />
+					</Select.Trigger>
+					<Select.Content>
+						<Select.Group>
+							<Select.Label>Budget</Select.Label>
+							{#each userBudgets as budget}
+								<Select.Item value={budget.id} label={budget.name}>{budget.name}</Select.Item>
+							{/each}
+						</Select.Group>
+					</Select.Content>
+					<Select.Input name="expense_type" />
+				</Select.Root>
+			</div>
+
+			<!-- Expense amount -->
+			<div class="grid grid-cols-4 items-center gap-2">
+				<Label for="amount" class="text-left">Amount:</Label>
+				<Input id="amount" class="col-span-3" />
+			</div>
+
+			<!-- Expense date -->
+			<div class="grid grid-cols-4 items-center gap-2">
+				<Label for="username" class="text-left">Date</Label>
+				<DatePicker></DatePicker>
+			</div>
+		</div>
+
+		<Dialog.Footer>
+			<Button type="submit" class="mx-auto">Save</Button>
+		</Dialog.Footer>
+
+	</Dialog.Content>
+</Dialog.Root>

@@ -28,7 +28,7 @@ let correctUserDetails = $state(true);
 
 </script>
 
-<div class="items-center p-2 rounded-xl m-2 mt-2 lg:h-[1020px] sm:h-screen my-auto border rounded-xl">
+<div class="items-center p-2 rounded-xl m-2 mt-2 lg:h-[1020px] sm:h-screen my-auto rounded-xl">
     <div class="text-center w-[21%] h-[10%] mx-auto m-2">
         <!-- Logo -->
         <h6 class="font-black text-3xl antialiased mt-10">budgetBuddy <span class="hover:scale-110 transition duration-300 ease-in-out">{Logo}</span></h6>
